@@ -9,7 +9,8 @@ The **NetOps - FortiManager ZTP** solution pack contains the following resources
 
 |**Name**|**Description**|
 | :- | :- |
-| Fortinet FortiManager JSON-RPC  | Connector used to do generic API calls to FortiManager using API calls documented in [FNDN FortiAPI for FortiManager](https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/). |
+| Fortinet FortiManager JSON-RPC  | Connector used for communication with FortiManager using API calls. Information on the FortiManager API is  documented in [FNDN FortiAPI for FortiManager](https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/). | 
+| Code Snippet  | Connector used for executing custom code, i,e, `python` functions as part of playbooks. |
 
 ## Module Schema
 
@@ -20,6 +21,8 @@ The **NetOps - FortiManager ZTP** solution pack contains the following resources
 | Metafield Templates | Template files to populate Device Metadata on Device records. |
 | Scripts | Records designed to do a variety of scripts. Markdown Reports per device, DeviceDB, Remote CLI, PolicyDB, and/or TCL Scripts on devices via the FortiManager API. |
 | ZTP Profiles | Defined solutions to apply templates and scripts to devices on demand or when discovered. |
+| Announcements | Used in Dashboards for Quick Links. |
+| ZTP Quick Links | Need input |
    
 ## Roles
 
@@ -27,17 +30,17 @@ The **NetOps - FortiManager ZTP** solution pack contains the following resources
 | :- | :- |
 | FortiManager-Playbook-Appliance | The playbook appliance needs to have full access to records to update fields that are owned by FortiManager.  |
 | FortiManager-Admin | Users should not directly edit fields that are owned by FortiManager. |
-  Full App Permissions | Existing FortiSOAR Role to merge newly created modules.
+  Full App Permissions | Existing FortiSOAR Role to merge newly created modules. |
 
 ## Record Set
 
 |**Name**|**Description**|
 | :- | :- |
-|  Announcements  |  Used in Dashboards for Quick Links.  |
 |  ZTP Profiles  |  ZTP Profile Records designed to assign to testing Models in FortiManager matching the name `FG0#` for each feature test and can often be auto-assigned. |
 |  Metafield Templates  |  Metafield Template Records are used in ZTP Profiles to handle various Feature Examples.  |
 |  Scripts  |  Records to run various scripts on devices in the Feature Examples. |
-|  Attachments  | Example spreadsheets used in custom playbooks with metadata lookup examples are included in this pack. |
+|  Attachments  | Example spreadsheets used in custom playbooks with metadata lookup examples are included in this pack. | 
+|  ZTP Quick Links  |  Need input.  |
 
 ## Playbook Collection
 
@@ -50,7 +53,7 @@ The **NetOps - FortiManager ZTP** solution pack contains the following resources
 | 10 - SP - NetOps-FortiManager ZTP - Triggers | Actions triggered by record changes within the system and used heavily in the ZTP Flow process. |
 | 10 - SP - NetOps-FortiManager ZTP - Custom Playbooks | Playbooks that can be created by users as metadata sources and used in Template files to build custom solutions within the integration. |
 
->**Warning:** We recommend that you clone these playbooks before customizing to avoid loss of information while upgrading the solution pack.
+>**Warning:** It is recommended that you clone these playbooks before customizing to avoid loss of information while upgrading the solution pack.
 
 ## Feature Tests (ZTP Profiles)
 
