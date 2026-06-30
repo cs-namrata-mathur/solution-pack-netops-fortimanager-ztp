@@ -1,7 +1,7 @@
 | [Home](../../README.md) / [Usage](../usage.md) |
 |------------------------------------------------|
 
-## Provisioning Example Flow
+# Provisioning Example Flow
 
 In this example we will perform the following provisioning steps on 4x FortiGates that are in FortiManager and Unauthorized using one manual step to kick everything off. This manual step can be done automatically by changing the first ZTP Profile to `auto assign mode`. 
 

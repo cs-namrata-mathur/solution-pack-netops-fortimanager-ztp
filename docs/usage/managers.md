@@ -3,18 +3,18 @@
 
 # Managers
 
-Creating a Manager record requires minimal information to kick off the integration. Creating Manger records only needs the `FortiManager Host`, `RPC User` and `RPC Password`. 
+Creating a manager record requires only the information needed to establish communication with FortiManager. Specify the `FortiManager Host`, `RPC User` and `RPC Password` to configure the connection.
 
 ![](../res/modules/manager-create.png)
 
 ## Summary
 
-Once created, the rest of the information is gathered via the FMG API and stored in FortiSOAR for automation and reporting. 
+After the manager record is created, FortiSOAR retrieves additional information from FortiManager through the API and stores it for use in automation, monitoring, and reporting.
 
 ![](../res/modules/managers-summary.png)
 
 ## Actions
 
-Default Actions to the FMG records include bt are not limited to the below screenshot. 
+Manager records provide a variety of actions for interacting with FortiManager. The following screenshot highlights some of the available actions:
 
 ![](../res/modules/managers-summary-actions.png)

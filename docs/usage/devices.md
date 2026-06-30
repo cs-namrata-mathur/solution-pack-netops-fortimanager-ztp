@@ -5,16 +5,16 @@
 
 ## Summary
 
-Device records are only created by the FMG `Synchronize DeviceDB` action and the data is populated in FortiSOAR for presentation. 
+Device records are created by the FortiManager `Synchronize DeviceDB` action, which synchronizes device information from FortiManager to FortiSOAR. The synchronized data is stored in FortiSOAR and made available for automation, reporting, and device management.
 
 ![](../res/modules/devices-summary.png)
 
 ## Actions
 
-Devices have a lot of actions that are available that can modify the Device record for preparing automation or kicking off automation to API calls to FMG for specific tasks. 
+The **Devices** module provides a wide range of actions for updating device records, preparing devices for automation, and initiating FortiManager API operations for common management tasks.
 
 ![](../res/modules/devices-summary-actions.png)
 
-Actions are also exposed differently per other Device focused Dashboards such as the `Device Metadata Manager`. 
+Many of these actions are also available from device-focused dashboards, such as the **Device Metadata Manager**, providing convenient access to common device management workflows.
 
 ![](../res/modules/devices-metadata-manager.png)

@@ -3,83 +3,134 @@
 
 # Contents
 
-The **NetOps - FortiManager ZTP** solution pack contains the following resources.
+The **NetOps - FortiManager ZTP** solution pack provides the resources required to automate Zero Touch Provisioning (ZTP) workflows for FortiManager-managed devices.
 
-## Connectors
-
-|**Name**|**Description**|
-| :- | :- |
-| Fortinet FortiManager JSON-RPC  | Connector used for communication with FortiManager using API calls. Information on the FortiManager API is  documented in [FNDN FortiAPI for FortiManager](https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/). | 
-| Code Snippet  | Connector used for executing custom code, i,e, `python` functions as part of playbooks. |
-
-## Module Schema
-
-|**Name**|**Description**|
-| :- | :- |
-| Managers | Stores FortiManager information for one or more FortiManagers |
-| Devices | Synchronized from the FortiManager's Device DB table. |
-| Metafield Templates | Template files to populate Device Metadata on Device records. |
-| Scripts | Records designed to do a variety of scripts. Markdown Reports per device, DeviceDB, Remote CLI, PolicyDB, and/or TCL Scripts on devices via the FortiManager API. |
-| ZTP Profiles | Defined solutions to apply templates and scripts to devices on demand or when discovered. |
-| Announcements | Used in Dashboards for Quick Links. |
-| ZTP Quick Links | Need input |
-   
 ## Roles
 
-|**Name**|**Description**|
+|**Role**|**Description**|
 | :- | :- |
-| FortiManager-Playbook-Appliance | The playbook appliance needs to have full access to records to update fields that are owned by FortiManager.  |
-| FortiManager-Admin | Users should not directly edit fields that are owned by FortiManager. |
-  Full App Permissions | Existing FortiSOAR Role to merge newly created modules. |
+| FortiManager-Playbook-Appliance | Grants the playbook appliance full access to records so it can update fields managed by FortiManager.  |
+| FortiManager-Admin | Allows administrators to manage FortiManager resources while preventing direct modification of fields synchronized from FortiManager. |
+  Full App Permissions | Existing FortiSOAR role used to grant access to newly installed modules within the solution pack. |
+  
+## System Views
 
-## Record Set
-
-|**Name**|**Description**|
+|**System View**|**Description**|
 | :- | :- |
-|  ZTP Profiles  |  ZTP Profile Records designed to assign to testing Models in FortiManager matching the name `FG0#` for each feature test and can often be auto-assigned. |
-|  Metafield Templates  |  Metafield Template Records are used in ZTP Profiles to handle various Feature Examples.  |
-|  Scripts  |  Records to run various scripts on devices in the Feature Examples. |
-|  Attachments  | Example spreadsheets used in custom playbooks with metadata lookup examples are included in this pack. | 
-|  ZTP Quick Links  |  Need input.  |
+| FortiManager | A menu option that provides access to the FortiManager modules, including Managers, Devices, and ZTP Profiles. |
 
-## Playbook Collection
+## Module Schemas
+
+|**Module Schema**|**Description**|
+| :- | :- |
+| Managers | Stores connection and other information for one or more FortiManager instances. |
+| Devices | Stores device records synchronized from the FortiManager DeviceDB table. |
+| Metafield Templates | Stores template files used to populate device metadata in device records. |
+| Scripts | Stores reusable scripts, including Markdown reports, DeviceDB scripts, Remote CLI scripts, PolicyDB scripts, and TCL scripts executed through the FortiManager API.|
+| ZTP Profiles | Defines automation workflows that apply templates and scripts when devices are discovered or run on demand. |
+| Announcements | Stores announcements displayed in dashboards and other solution components. |
+| ZTP Quick Links | Stores quick links that provide access to dashboards and FortiManager modules. |
+
+## Widgets
+
+|**Widget**|**Description**|
+| :- | :- |
+| Playbook Buttons | Displays playbook buttons on a record's detail page, allowing users to start automation directly from the record. |
+
+## Playbook Collections
+
 
 |**Playbook Collection Name**|**Description**|
 | :- | :- |
-| 10 - SP - NetOps-FortiManager ZTP - Microservices | Focuses on FortiManager API calls. |
-| 10 - SP - NetOps-FortiManager ZTP - Buttons | Buttons that users can use to invoke sections of the framework on carious records. |
-| 10 - SP - NetOps-FortiManager ZTP - Record Handlers | Automation around records within the framework. |
-| 10 - SP - NetOps-FortiManager ZTP - Synchronizing | Synchronize data from FortiSOAR and FortiManager. |
-| 10 - SP - NetOps-FortiManager ZTP - Triggers | Actions triggered by record changes within the system and used heavily in the ZTP Flow process. |
-| 10 - SP - NetOps-FortiManager ZTP - Custom Playbooks | Playbooks that can be created by users as metadata sources and used in Template files to build custom solutions within the integration. |
+| 10 - SP - NetOps-FortiManager ZTP - Microservices | Contains playbooks that communicate with the FortiManager API. |
+| 10 - SP - NetOps-FortiManager ZTP - Buttons | Contains playbooks that contain buttons that users can use to invoke sections of the framework on various records. |
+| 10 - SP - NetOps-FortiManager ZTP - Record Handlers | Contains playbooks that contain automation to manage record lifecycle events within the solution. |
+| 10 - SP - NetOps-FortiManager ZTP - Synchronizing | Contains playbooks that synchronizes data between FortiSOAR and FortiManager. |
+| 10 - SP - NetOps-FortiManager ZTP - Triggers | Contains event-driven playbooks that respond to record changes and support the ZTP workflow. |
+| 10 - SP - NetOps-FortiManager ZTP - Custom Playbooks | Contains playbooks that can be customized and used as metadata sources when building automation workflows. |
 
->**Warning:** It is recommended that you clone these playbooks before customizing to avoid loss of information while upgrading the solution pack.
+>**Important:** Clone the provided playbooks before making customizations. This prevents custom changes from being overwritten when the solution pack is upgraded.
+
+
+## Connectors
+
+|**Connector**|**Description**|
+| :- | :- |
+| Fortinet FortiManager JSON-RPC  | Connector used for communication with FortiManager using API calls. Information on the FortiManager API is  documented in [FNDN FortiAPI for FortiManager](https://fndn.fortinet.net/index.php?/fortiapi/5-fortimanager/). | 
+| Code Snippet  | Connector used for executing custom code (for example, Python functions) as part of playbook workflows. |
+
+
+## Record Sets
+
+|**Record Set**|**Description**|
+| :- | :- |
+|  Attachments  | Provides sample spreadsheets used by the example metadata lookup playbooks. | 
+|  Metafield Templates  |  Metafield template Records by ZTP profiles to demonstrate feature examples.  |
+|  Scripts  |  Records to run various scripts on devices in the feature examples. |
+|  ZTP Profiles  |  ZTP Profile records that can be assigned automatically or manually to devices for testing and validation in FortiManager by matching the name `FG0#` for each feature test. |
+|  ZTP Quick Links  |  Used in ZTP Profiles records to create quick links to Dashboards and FortiManager Modules.  |
+
+## Picklists
+
+- AnnouncementType
+- AnnouncementCriticality
+- AttachmentsType
+- EnableDisable
+- Script Type
+- ZTP Assignment Module
+- ZTP Assignment Search Field
+- ZTP Assignment Search Type
+- ZTP Phase
+- ZTP Profile Mode
+
+
+## Module Views
+
+- Devices - Form, Detail List
+- Scripts - Form, Detail List
+- Managers - Form, Detail List
+- Announcements - Form, Detail List
+- ZTP Profiles - Form, Detail List
+- ZTP Quick Links - Form, Detail List
+- Metafields Templates - Form, Detail List
+
+## Playbook Blocks
+
+- Dynamic Manager and Device List
+
+## Global Variables
+
+- Server_fqhn
+
 
 ## Feature Tests (ZTP Profiles)
 
-This solution pack provide various examples of ZTP Profiles that can be used to test some common features needed in building an automation solution. You can use the automatic assigning of these profiles by creating devices matching the names already put in the ZTP Profile `Assignment Search` or you can manually assign a profile to one or more devices to perform the feature test. 
+The solution pack includes sample ZTP profiles that demonstrate common Zero Touch Provisioning (ZTP) workflows and automation scenarios. You can assign these profiles automatically by creating devices that match the profile's `Assignment Search` criteria, or manually assign a profile to one or more devices for testing.
 
 | Feature Test ID | Profile Name | Description | 
 | --------------- | ------- | ----------- |
-| FT001 | Prompt User for Metadata via FortiSOAR | The metafield `loopback0_ip` is empty and FortiSOAR Users are prompted to complete through a system manual input task. |
-| FT002 | Prompt User for Metadata and Monitor FG config before proceeding | The metafield `loopback0_ip` is empty and the metafield `lo0_exists` needs to be set to `yes` before the profile will complete. The `lo0` interface is checked using an API call to FMG to check `/global/system/interface` for the device on a `20 second` loop loop until seen. |
-| FT003 | Metadata Source via Custom Playbook | Use two custom playbooks to populate the metafields `ip_table` and `ip_table_lookup`.  |
-| FT004 | Monitor Metafield from FG config before proceeding | Performs the same steps as **FT001** but with a `60 second` loop. |
-| FT005 | Assign Device to Multiple Device Groups | Simply assign a device to the device groups `FT005a`,`FT005b`,`FT005c`. The device groups are created in FMG if they do not exist. |
-| FT006 | Assign Device to Groups from Device Metafield | Create the metafield `platform` and `device_groups`. The `device_groups` field dynamically contains one group based on the device model and one on the device series. |
-| FT007 | Retrieve Device Config | Use a ZTP Phase to retrieve the config from a live device. This will cause an expected ZTP Phase error if run on a device model. |
-| FT008 | Lookup Metadata in Spreadsheet from Hostname | Includes sample spreadsheets in the Attachment section of FortiSOAR. Use a custom playbook to search for `CSV` and `XLSX` files in the FortiSOAR Attachment records that are tagged as type `metadata`. Reach each file, in order of oldest to newest, and find and append metadata to the device record as found. |
-| FT009 | Clone of **FT008** and is never assigned due to order priority. | To show `order priority` working this profile has the same `Assignment Search` regex as FT008 but will not match on the device names due to order. |
-| FT010 | Install Site VLANs using DeviceDB Config | Create the metafield `site_id`, `site_subnet`, `vlan_cidr`, and `vlan_count`. The `site_subnet` is derived from taking a `/24` from `10.48.0.0/12` using the `site_subnet`. |
-| FT011 | Install Site VLANs using DeviceDB Config and Run Interface Report | Performs the same steps as **FT010** but then runs the same `Markdown Report` linked in **FT013**. |
-| FT012 | Install Site VLANs using DeviceDB Config and set ZTP Profile Next to Run a Report | Performs the same steps as **FT010** but then sets the `ZTP Profile Next` to the ZTP Profile `FT013 - Run Device Interface Report` to chain a second profile with **FT013**.  |
-| FT013 | Run Device Interface Report | Call the API of FMG for the device interfaces using a `Markdown Report` script template and append the device `Report Markdown` field for reporting. |
-| FT014 | Automatic Assignment - Advanced Search for FG0113 | Using Advanced search we leverage the regex `^(?=.*\bdevicename:FG0+113\b)(?=.*\bplatform:Forti\S+\b)(?=.*\bsn:FG0+113\b).*` to find devices based on `device name`, `platform`, and `serial`.  |
-| FG015 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=6 Ports | Check the `hostname` for `FG0114-FG0118`. Then use an API call to FMG to check `/global/system/interface` and a Jinja `json_query` function to count `physical` ports on a device and assign if it matches the range. |
-| FG016 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=12 Ports | Same as **FG015** but with a different group of port count. | 
-| FG017 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=20 Ports | Same as **FG015** but with a different group of port count. | 
-| FG018 | Automatic Assignment - Jinja Search for FG0114-FG0118 >20 Ports |  Same as **FG015** but a catch all if no other profile with a port count matched. | 
-| FG019 |  Toggle Device Hostname and FortiManager Device Name using a Custom Script | By leveraging a custom script we can run custom playbooks to make arbitrary API calls and us the output of the custom script to modify the FortiSOAR device record. | 
+| FT001 | Prompt User for Metadata via FortiSOAR | Prompts the user to enter a value for the `loopback0_ip` metafield by using a manual input task before the workflow continues. |
+| FT002 | Prompt User for Metadata and Monitor FG config before proceeding | Prompts the user to populate the `loopback0_ip` metafield. Before completing the profile, the workflow verifies that the `lo0_exists` metafield is set to `yes`. It polls the FortiManager API every `20` seconds until the `lo0` interface is detected. |
+| FT003 | Metadata Source via Custom Playbook | Demonstrates how custom playbooks populate the `ip_table` and `ip_table_lookup` metafields.  |
+| FT004 | Monitor Metafield from FG config before proceeding | Performs the same workflow as **FT001**, but polls the device every `60` seconds before continuing. |
+| FT005 | Assign Device to Multiple Device Groups | Assigns the device to the `FT005a`, `FT005b`, and `FT005c` device groups. The workflow creates the groups in FortiManager if they do not already exist.  |
+| FT006 | Assign Device to Groups from Device Metafield | Creates the `platform` and `device_groups` metafields. The `device_groups` value is generated dynamically based on the device model and device series. |
+| FT007 | Retrieve Device Config | Retrieves the configuration from a live device during a ZTP phase. Running this profile against a device model generates the expected ZTP phase error. |
+| FT008 | Lookup Metadata in Spreadsheet from Hostname | Demonstrates how to retrieve metadata from CSV and XLSX files stored in FortiSOAR Attachments. The workflow reads each file in chronological order and appends matching metadata to the device record. |
+| FT009 | Clone of **FT008** and is never assigned due to order priority. | Uses the same `Assignment Search` expression as **FT008** but is never assigned because FT008 has higher assignment priority. This profile demonstrates how `assignment order` affects profile selection. |
+| FT010 | Install Site VLANs using DeviceDB Config | Creates the `site_id`, `site_subnet`, `vlan_cidr`, and `vlan_count` metafields. The workflow derives the `site_subnet` by allocating a `/24` from `10.48.0.0/12` address space. |
+| FT011 | Install Site VLANs using DeviceDB Config and Run Interface Report | Performs the same workflow as **FT010** then generates the Markdown interface report used in **FT013**. |
+| FT012 | Install Site VLANs using DeviceDB Config and set ZTP Profile Next to Run a Report | Performs the same workflow as **FT010** then sets the `ZTP Profile FT013 - Run Device Interface Report` as the next `ZTP Profile` to demonstrate profile chaining.  |
+| FT013 | Run Device Interface Report | Retrieves device interface information from the FortiManager API using a `Markdown Report` script template that is appended to the device's `Report Markdown` field. |
+| FT014 | Automatic Assignment - Advanced Search for FG0113 | Demonstrates automatic profile assignment by using an advanced regular expression to match device name, platform, and serial number. The regex used us `^(?=.*\bdevicename:FG0+113\b)(?=.*\bplatform:Forti\S+\b)(?=.*\bsn:FG0+113\b).*` to find devices based on `device name`, `platform`, and `serial`.  |
+| FG015 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=6 Ports | Uses the hostname and a FortiManager API query to count physical interfaces with the Jinja json_query filter. Assigns the profile when the device has six or fewer physical ports. The query checks the `hostname` for `FG0114-FG0118`. Then use an API call to FMG to check `/global/system/interface` and a Jinja `json_query` function to count `physical` ports on a device and assign if it matches the range. |
+| FG016 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=12 Ports | Performs the same workflow as **FT015**, but matches devices with up to 12 physical ports. | 
+| FG017 | Automatic Assignment - Jinja Search for FG0114-FG0118 <=20 Ports | Performs the same workflow as **FT015**, but matches devices with up to 20 physical ports. | 
+| FG018 | Automatic Assignment - Jinja Search for FG0114-FG0118 >20 Ports |  Performs the same workflow as **FT015**, but it serves as the fallback profile for devices with more than 20 physical ports when no previous profile matches. | 
+| FG019 |  Toggle Device Hostname and FortiManager Device Name using a Custom Script | Demonstrates how to use a custom script and playbook to make FortiManager API calls and update the corresponding FortiSOAR device record. | 
+| FG020 |  Creates CLI Templates and a Provisioning Template Group | Authorizes the device, derives the `site_id` from the hostname, creates CLI and Jinja templates for loopback interfaces (`lo1` and `lo2`), creates the provisioning template group if it does not exist, and installs the generated configuration on the device. | 
+| FG021 |  Creates a Policy Package & Install | Creates a policy package named **FT021** if it does not already exist, then installs the policy package on the target device. After the installation completes, the workflow automatically starts **FT022**. | 
+| FG022 |  Updates a Policy Package and Install with Updates | Updates the policy package created by **FT021** with any required changes, then reinstalls the updated policy package on the target device. | 
 
 | [Installation](./setup.md#installation) | [Configuration](./setup.md#configuration) | [Usage](./usage.md) |
 |-----------------------------------------|-------------------------------------------|---------------------|
