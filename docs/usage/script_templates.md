@@ -7,22 +7,22 @@
 
 | Type | Description | 
 | ---- | ----------- |
-| DeviceDB | Uses Jinja in FortiSOAR to create a DeviceDB script in the FMG, runs on the device, and then deletes the script from FMG when completed. | 
-| PolicyDB | Uses Jinja in FortiSOAR to create a PolicyDB script in the FMG, runs on the Policy Package assigned to the device, and then deletes the script from FMG when completed. | 
-| Remote CLI | Uses Jinja in FortiSOAR to create a Remote CLI script in the FMG, runs on the device, and then deletes the script from FMG when completed. |
-| Remote TCL | Uses Jinja in FortiSOAR to create a Remote TCL script in the FMG, runs on the device, and then deletes the script from FMG when completed. |
-| Provisioning CLI Template | Uses Jinja in FortiSOAR to create a Provisioning CLI script in the FMG and associates it to this device using the Provisioning Template Group defined in this device. | 
-| Provisioning Jinja Template | Creates a Provisioning Jinja script in the FMG and associates it to this device using the Provisioning Template Group defined in this device. FortiSOAR will **not render the Jinja** as these are Jinja scripts that should be rendered by FMG. |
-| Report Markdown | Creates a locally hosted report output that gets appended to the `Report Markdown` field on the [Device](./devices.md) record.  | 
-| [Custom](#custom-script-data) | Custom scripts are designed to control the device record in FortiSOAR as well as kickoff any Metafield Sources that can be used to leverage any custom script. | 
+| DeviceDB | Creates a DeviceDB script in FortiManager (FMG) using a Jinja template (from FortiSOAR), runs the script on the device, and deletes the temporary script from FMG after execution. | 
+| PolicyDB | Creates a PolicyDB script in FMG using a Jinja template (from FortiSOAR), runs the script on the policy package assigned to the device, and deletes the temporary script from FMG after execution. | 
+| Remote CLI | Creates a Remote CLI script in FMG using a Jinja template (from FortiSOAR), runs the script on the device, and deletes the temporary script from FMG after execution. |
+| Remote TCL | Creates a Remote TCL script in FMG using a Jinja template (from FortiSOAR), runs the script on the device, and deletes the temporary script from FMG after execution. |
+| Provisioning CLI Template | Creates a Provisioning CLI script in FMG using a Jinja template (from FortiSOAR) and associates it with the device by using the device's configured Provisioning Template Group. | 
+| Provisioning Jinja Template | Creates a Provisioning Jinja template in FMG  using a Jinja template (from FortiSOAR) and associates it with the device by using the device's configured Provisioning Template Group. FortiSOAR does **not render the Jinja template** because it is intended to be rendered by FMG. |
+| Report Markdown | Creates locally hosted report output and appends it to the `Report Markdown` field on the [Device](./devices.md) record.  | 
+| [Custom](#custom-script-data) | Custom scripts manage the device record in FortiSOAR and can trigger Metafield Sources that support custom automation workflows. | 
 
 ## Example Jinja Rendered CLI Templates
 
-Templates can be as simple as creating a config block and can be used to create CLI output with `DeviceDB`, `PolicyDB`, `Remote CLI`, and `Remote TCL` script types. 
+Templates can range from simple configuration blocks to full Jinja templates that generate complex configurations. You can use templates to generate CLI output for the `DeviceDB`, `PolicyDB`, `Remote CLI`, and `Remote TCL` script types. 
 
 ![](../res/modules/script-template-example1.png)
 
-Script Templates can also be full Jinja scripts to build a more complicated configuration.
+For more advanced use cases, script templates can consist of full Jinja scripts that generate complex configurations:
 
 ```
 {%- set vlan_count = devmeta.vlan_count|int -%}
@@ -49,7 +49,7 @@ end
 
 ## Custom Script Data
 
-Custom scripts need to output a JSON to indicate what should be done to the device record. You can leverage the [Metafield Sources](../usage/jinja_rendering_with_metafield_sources.md) to run custom solutions to augment any actions you need to perform within the `Run Link Scripts` in [ZTP Phases](ztp_profiles.md#ztp-phases). 
+Custom scripts must output a JSON that defines the actions to perform on the device record. You can use [Metafield Sources](../usage/jinja_rendering_with_metafield_sources.md) to implement custom logic and extend the actions performed by `Run Link Scripts` during [ZTP Phases](ztp_profiles.md#ztp-phases). 
 
 ```
 {%- set idx = {} -%}
