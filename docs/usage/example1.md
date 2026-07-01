@@ -3,73 +3,72 @@
 
 # Provisioning Example Flow
 
-In this example we will perform the following provisioning steps on 4x FortiGates that are in FortiManager and Unauthorized using one manual step to kick everything off. This manual step can be done automatically by changing the first ZTP Profile to `auto assign mode`. 
+This example demonstrates how to provision four unauthorized FortiGate devices managed by FortiManager. The workflow begins with a single manual action: assigning the initial ZTP profile to the selected devices. To fully automate the workflow, configure the initial ZTP profile to use `auto assign mode`. 
 
-  1) Authorize the FortiGates for management.
-  2) Create a pre provisioning device report.
-  3) Create local admins with a special `admin_ro` profile. 
-  4) Create VLAN interfaces using a `site_subnet`, `vlan_count`, and `vlan_cidr` variable per site. 
-  5) Append all created VLAN Subnets to the site admins using the `admin_ro` profile. 
-  5) Assign each site to the respective `Device Groups`, `Provisioning Template Groups`, and `Policy Package` inside FortiManager. 
-  6) Create FortiManager `Address Objects` for each VLAN at each site. 
-  7) Update the FortiManager Address Group `VLANS` with `Per Device Mapping` of each VLAN at each site to update the FortiManager `Policy Package`. 
-  8) Push all the configurations to the sites using the `Install Device Config` and `Install Policy Package` features in FortiManager. 
+ 1. Authorize the FortiGate devices for management in FortiManager.
+ 2. Create a pre-provisioning device report.
+ 3. Create local administrator accounts with the `admin_ro` profile.
+ 4. Create VLAN interfaces using the `site_subnet`, `vlan_count`, and `vlan_cidr` variables defined for each site.
+ 5. Append all newly created VLAN Subnets to the site admins using the `admin_ro` profile. 
+ 6. Assign each site to the to the appropriate FortiManager `Device Groups`, `Provisioning Template Groups`, and `Policy Package`.
+ 7. Update the `VLANS address group` using `Per-Device Mapping` so the FortiManager `Policy Package` references the site-specific VLAN address objects.
+ 8. Push all the configurations to the sites using the `Install Device Config` and `Install Policy Package` features in FortiManager. 
 
 ## Unauthorized Devices
-Devices in FortiManager are synchronized to FortiSOAR for handling. 
+FortiManager synchronizes unauthorized devices with FortiSOAR, where they are processed by the provisioning workflow.
 
 ![](../res/example1/ex1-001.png)
 
 ## Assign ZTP Profile
-We will first manually select these devices and then assign the ZTP Profile `Report-and-Onboard`. 
+Select the unauthorized devices and assign the `Report-and-Onboard ZTP` profile.
 
 ![](../res/example1/ex1-002.png)
 
-The ZTP Profile describes the steps to be used in the `ZTP Step Map` settings. 
+The ZTP profile defines the workflow phases through its `ZTP Step Map` settings.
 
 ![](../res/example1/ex1-003.png)
 
 ## Authorize Devices
-The ZTP Profile kicks off the first ZTP Phase defined which is `Authorize` the device(s). We can see FortiSOAR performing these steps via the API in FortiManager. 
+Assigning the ZTP profile starts the **Authorize** phase, which authorizes the selected devices for management in FortiManager. FortiSOAR performs the authorization by using the FortiManager API.
 
 ![](../res/example1/ex1-004.png)
 
 ## ZTP Profile for Onboard & Reporting
 
-The ZTP Profile also has templates that will run and in onboarding we run these report scripts. 
+The `Report-and-Onboard ZTP` profile also executes report templates during the onboarding process.
 
 ![](../res/example1/ex1-003b.png)
 
-As the above scripts run on each device a device report is created as seen below. 
+As each report script completes, FortiSOAR generates a device report as shown in the following image:
 
 ![](../res/example1/ex1-006.png)
 
 ## ZTP Profile for Provisioning
 
-ZTP Profiles, such as `Report-and-Onboard`, can kick off another profile with a different set of provisioning instructions by setting the `ZTP Profile Next` setting. 
+A ZTP profile such as the `Report-and-Onboard ZTP` profile, can automatically assign another profile by configuring the `ZTP Profile Next` setting. This allows the provisioning workflow to progress through multiple phases without additional user intervention.
 
 ![](../res/example1/ex1-010.png)
 
-Once assigned new phases will start on the devices. Here we can see that device metadata is being filled out by the profile `ZTPF-A.1` to continue our provisioning objectives. 
+After the next profile is assigned, additional provisioning phases begin. As shown in the following image, the `ZTPF-A.1` profile populates device metadata required for the remaining provisioning tasks:
 
 ![](../res/example1/ex1-005.png)
 
-## FortiManager Setup is Complete
+## Verify the FortiManager configuration
 
-The devices in FortiManager are assigned and green. 
+When provisioning is complete, the devices are authorized and display a healthy status in FortiManager.
 
 ![](../res/example1/ex1-011.png)
 
-The FortiManager Address Object has been updated with subnets from each site. 
+The FortiManager Address Object is updated with the VLAN subnets created for each site. 
 
 ![](../res/example1/ex1-012.png)
 
-## ZTP Flow (ZTPF) is Complete
+## Complete the ZTP workflow
 
-The provisioning in this example used a total of 4 ZTP Profiles to completely onboard each site. Each profile defined instructions for provisioning and can be assigned at any time. Therefore, sites already onboarded or simply modified, can be assigned any ZTP Profile to kick off the same instructions at any time. 
+This example uses four ZTP profiles to fully provision each site. Each profile performs a specific set of provisioning tasks and can be assigned independently. You can reassign any profile to an existing site to rerun its associated tasks whenever required.
 
 ![](../res/example1/ex1-013.png)
 
-Once complete we can use reporting to confirm that we have provisioned everything as expected. This report can be invoked by assigning the last ZTP Profile, `Device-Post-Report`, at any time to simply perform a device report. 
+After provisioning completes, verify the deployment by generating a post-provisioning report. Assign the `Device-Post-Report` ZTP profile at any time to collect the current device configuration and confirm that provisioning completed successfully.
 
 ![](../res/example1/ex1-009.png)

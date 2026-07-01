@@ -3,12 +3,22 @@
 
 # Jinja Rendering with Metafield Sources
 
-Metafield sources are used to create dynamic Jinja variable input for Jinja templates. These can be leveraged in the following record types:
- - ZTP Profile Assignment Search Type = Jinja
+Metafield sources extend the data available to Jinja templates by retrieving additional information at render time. This allows templates to generate dynamic output using data from FortiManager, FortiSOAR playbooks, or other supported sources.
+
+You can use metafield sources with the following record types:
+
+ - ZTP Profile Assignment (Search Type = `Jinja`)
  - Metafield Templates
  - Script Templates
 
-When leveraging Jinja Templates from this framework you have Jinja Variables at your disposal and by default the attributes `record` and `devmeta`. You can see this info when rendering script templates or metafield templates by looking for the `get_jinja_variables` step or `jinja_vars` variable within the `Render Jinja` playbook execution logs. Once you have sample data you can open the `Tools > Jinja Editor` by editing any playbook and manually paste your Jinja Variables into the `JSON` section and then your `Jinja Template` to test the results of your script. 
+When a template is rendered, the framework automatically provides the following Jinja variables: 
+ - `record`— The current record being processed.
+ - `devmeta`— Device metadata associated with the current record.
+
+You can inspect the available variables while rendering script templates or metafield templates by looking for the `get_jinja_variables` step or `jinja_vars` variable within the **Render Jinja** playbook execution logs. 
+
+You can use these variables directly in playbooks by opening any playbook and in the Playbook Designer click `Tools > Jinja Editor` and pasting the Jinja variables into the `JSON` section of your `Jinja Template` to test and validate Jinja templates during development.
+
 ```
 {
   "jinja_vars": {
@@ -37,7 +47,8 @@ When leveraging Jinja Templates from this framework you have Jinja Variables at 
 }
 ```
 
-When you add a Metafield Source you will append data to the defined `keynmame` as a new attribute with your additional custom data to then be used within your Jinja Template. 
+A metafield source retrieves additional data and appends it to the Jinja variable set under the configured `keyname`. The resulting object (with additional custom data) becomes available as a new attribute that can be referenced within the Jinja template. This mechanism allows templates to combine record data with dynamically retrieved information from external sources.
+ 
 ```
 {
   "jinja_vars": {
@@ -48,19 +59,20 @@ When you add a Metafield Source you will append data to the defined `keynmame` a
 }
 ```
 
-# Metafield Source Types
-Metafield source types describe how we can retrieve data to be used in a jinja template. 
+## Metafield Source Types
 
- - fmg 
- - playbook 
+A metafield source defines how additional data is retrieved before a Jinja template is rendered. The framework supports the following source types:
 
-Metafield sources can contain multiple sources and can be mixed of API and Playbooks. Source types have a different schema as different parameters are required to retrieve the Jinja variables. Below are details of the schema as well as examples that can be used in records that render Jinja. 
+ - `fmg` 
+ - `playbook`
 
-## Metafield Source Type: fmg
+A metafield source can define one or more data sources and combine both API (fmg) and playbook source types. Each source type uses a different schema because the required parameters depend on how the Jinja variables are retrieved. The following sections describe each supported source type and its schema.
 
-### Schema (fmg)
+### Metafield Source Type: `fmg`
 
-The following source type will leverage a FMG JSON-RPC `GET` action on the API endpoint defined in the `location`. Ideally this is for retrieving tables or objects from the FMG API. 
+#### Schema (fmg)
+
+The `fmg` source type retrieves data directly from the FortiManager API by performing a `JSON-RPC GET` request against the endpoint specified in the `location` field. Use this source type to retrieve FortiManager objects such as device tables, interfaces, policies, or other configuration data that should be available during template rendering.
 
 ```
 [
@@ -73,9 +85,9 @@ The following source type will leverage a FMG JSON-RPC `GET` action on the API e
 ]
 ```
 
-### Example (fmg)
+#### Example (fmg)
 
-In this example we are grabbing the `interface` table for the device name from the record where we are rendering the Jinja. 
+The following example retrieves the `interface` table for the device associated with the current record where we are rendering the Jinja. The returned data is added to the Jinja variables and can be referenced within the template.
 
 ```
 [
@@ -88,11 +100,11 @@ In this example we are grabbing the `interface` table for the device name from t
 ]
 ```
 
-## Metadata Source Type: playbook
+### Metadata Source Type: `playbook`
 
-### Schema (playbook)
+#### Schema (playbook)
 
-The following source type will leverage any custom playbook in FortiSOAR. This means you can create your own logic for building Jinja Variables that can come from any supported integration. 
+The `playbook` source type executes a FortiSOAR playbook and uses its output as Jinja variables. Custom playbooks can implement any logic required to build Jinja variables by retrieving data from supported integrations, transforming it as needed, and returning the results for use during template rendering.
 
 ```
 [
@@ -105,9 +117,9 @@ The following source type will leverage any custom playbook in FortiSOAR. This m
 ]
 ```
 
-### Example (playbook)
+#### Example (playbook)
 
-The following example is used in the ZTP Flow Feature Examples. These playbooks perform simple logic and return data to showcase how custom playbooks can be leveraged. 
+The following example is used by the ZTP Flow feature examples. The referenced playbooks perform simple processing and return sample data to demonstrate how custom playbooks can extend the Jinja rendering framework.
 
 ```
 [

@@ -3,7 +3,10 @@
 
 # ZTP Profiles
 
-The ZTP Profile describes what automation will be applied, and how, when associated with a device record. This ZTP Profile record is broken into the following setting areas:
+A ZTP profile defines the automation that is applied when it is assigned to a device. It controls how devices are matched to the profile, which provisioning phases are executed, and the configuration tasks performed during the provisioning workflow.
+
+A ZTP profile consists of the following sections:
+
  - Profile Settings
  - Provisioning Settings
  - Related Records:
@@ -11,32 +14,33 @@ The ZTP Profile describes what automation will be applied, and how, when associa
    - Script Templates
    - Devices
 
-Below we will provide details for the above setting areas and settings. 
+The following sections describe each area and its available settings.
 
 ## Profile Settings
 
-The profile settings generally focus on how the ZTP Profile will operate when assigned to a device. It ranges from how the profile will be assigned to what might happen to the device record when the profile is associated. 
+Profile settings control how a ZTP profile is assigned and how it behaves throughout the provisioning workflow.
 
 | Setting | Description |
 | -------------------------- | --------------- |
-| Order Priority | If running in `Automatic` `Assignment Mode` the order from lowest to highlest that devices are automatically assigned to a profile. |
-| Profile Mode | The mode `Disable`, `Manual`, `Onboard`, `Lifecycle`, and `Decommision` is used for an overall operation of this profile. See the **ZTP Profile Modes** below for details. |
-| Assignment Mode | Can be set to `Manual` where you need to select devices to get this profile or `Automatic` which will run as a new device record is created.  |
-| Assignment Search Type | In automatic mode you can search for devices using `simple` and `advanced` with regex, or `jinja` to build logical responses of `true`. |
-| Assignment Search Fields | Only available for regex searches with `Simple` or `Advanced` and concatenates selected fields into a string.  |
-| Assignment Search Metadata Sources | Only available for `Jinja` searches and can retrieve Jinja variables from FMG API calls or custom playbooks. See the [Jinja Rendering with Metadata Sources](./jinja_rendering_with_metafield_sources.md) page for details. |
-| Assignment Search | Available for `Simple` or `Advanced` to store the regex or when `Jinja` is the `Search Type` will store Jinja Template language. |
-| Clear Linked Scripts | Checkbox to enable/disable the unlinking of any Script Templates related to the device this profile is assigned. This is useful for cases where a device has already run through a profile and you do not want to re-run the same templates. |
-| Clear Linked Metafield Templates  | Checkbox to enable/disable the unlinking of any Metafield Templates related to the device this profile is assigned. This is useful for cases where a device has already run through a profile and you do not want to re-run the same templates.  |
-| Clear Device Metadata | Checkbox to enable/disable to clear any previously created metadata from the metafield templates. This can be useful in cases where the metadata was already used and no longer needed.  |
-| Clear Device Reports | Checkbox to enable/disable to clear the `Report Markdown` field of the device in the case where you want to re-run Script Templates of type `Markdown Report` which will append that field on the device for reporting. |
-| Export Metadata to FortiManager  | Checkbox to enable/disable the API call to update the FortiManager Variables per Device mapping.  |
-| Retain Profile Assignment | Checkbox to enable/disable toggles if we should remove a ZTP Profile from a device when the ZTP Phases are complete. This is useful for cases where you might want to re-run a profile on a device or where you want to filter completed device based on the assigned profile regardless of the phase state. This is only available when `ZTP Profile Next` is empty.   |
-| Skip Delete Device | Checkbox to enable/disable is only available when running the `Profile Mode` as `Decommission` which by default will remove the device from FortiManager but retain the device record in FortiSOAR. |
+| Order Priority | When `Assignment Mode` is set to `Automatic`, profiles are evaluated from the lowest priority value to the highest for automatically assigning profiles to a device. |
+| Profile Mode | Defines the overall purpose of the profile. Available modes are `Disable`, `Manual`, `Onboard`, `Lifecycle`, and `Decommision`. See the **ZTP Profile Modes** for details. |
+| Assignment Mode | Specifies whether the profile is assigned manually (`Manual`), i.e., you need to select devices to get this profile, or, automatically (`Automatic`), i.e., this profie is assigned automatically when a new device record is created.  |
+| Assignment Search Type | Defines how devices are matched when `Assignment Mode` is `Automatic`. Supported search types are `Simple`, `Advanced` (regular expressions), and `Jinja`. |
+| Assignment Search Fields | Available only for regex searches with `Simple` or `Advanced`. Concatenates the selected fields into a single string for evaluation.  |
+| Assignment Search Metadata Sources | Available only for `Jinja` searches. Retrieves Jinja variables from FortiManager API calls or custom playbooks. See the [Jinja Rendering with Metadata Sources](./jinja_rendering_with_metafield_sources.md) for more information. |
+| Assignment Search | Available for `Simple` or `Advanced` to store the regex. When `Jinja` is the `Search Type` it stores Jinja Template language. |
+| Clear Linked Scripts | Checkbox to enable/disable the unlinking of any Script Templates from this device when the profile is assigned. Selecting this checkbox removes all linked Script Templates from the device when the profile is assigned. This is useful for cases where a device has already run through a profile and you do not want to re-run the same templates. |
+| Clear Linked Metafield Templates  | Checkbox to enable/disable the unlinking of any Metafield Templates from this device when the profile is assigned. Selecting this checkbox removes all linked Metafield Templates from the device when the profile is assigned. This is useful for cases where a device has already run through a profile and you do not want to re-run the same templates.  |
+| Clear Device Metadata | Checkbox to enable/disable to remove any previously created metadata from metafield templates. Selecting this checkbox removes metadata previously generated by Metafield Templates before provisioning begins. This can be useful in cases where the metadata was already used and no longer needed.  |
+| Clear Device Reports | Checkbox to enable/disable to clear the `Report Markdown` field of the device when the profile is assigned. Selecting this checking clears the device's Report Markdown field before running Markdown Report script templates. This can be useful in cases where you want to re-run Script Templates of type `Markdown Report` which will append that field on the device for reporting. |
+| Export Metadata to FortiManager  | Checkbox to enable/disable the API call to update the mapping of the FortiManager `per device` variable. Selecting this checkbox updates the FortiManager `per-device` variable mappings with the generated metadata. |
+| Retain Profile Assignment | Checkbox to enable/disable to retain or remove a ZTP Profile from a device when the ZTP Phases are complete. Selectng this option keeps the profile assigned after all ZTP phases complete. This is useful for cases where you might want to re-run a profile on a device or where you want to filter completed device based on the assigned profile regardless of the phase state. This option is available only when `ZTP Profile Next` is empty.   |
+| Skip Delete Device | Available only in `Decommission` mode. This checkbox is selected by default, which prevents the device from being deleted from FortiManager after the workflow completes. The device record remains in FortiSOAR. |
 
 # ZTP Phases
 
-The ZTP Phases are controlled from the `ZTP Step Map` field in the ZTP Profiles. The default setting is the following and can be changed to meet your needs. 
+The provisioning workflow is controlled by the `ZTP Step Map`, which defines the execution order of each provisioning phase. The default workflow follows and it be customized to meet your deployment requirements:
+
 ```
 {
   "Authorize" : {
@@ -64,31 +68,36 @@ The ZTP Phases are controlled from the `ZTP Step Map` field in the ZTP Profiles.
 
 | Phase  | Description  |
 | --------- | ----------------- |
-| Authorize | Authorize device if needed. If the device is modeled we skip to the next step. If the ADOM is not set we assume `root`. | 
-| Device Metadata | Handle device metadata. Can include notifying users  of required data. Can use metadata sources to retrieve data from API calls to FMG or custom playbooks.  |
-| Device Groups | Add Device to Device Groups defined in the ZTP Profile and/or the Device Metadata. |
-| Run Linked Scripts | Run all scripts linked to the device record. Scripts are not unlinked when done but ZTP Profiles can clear linked scripts to prevent running scripts multiple times that should only be run once. |
-| Install Device Config | Install the Device Config from the FMG API. |
-| Install Policy Package | Install the policy package from the FMG API. The package name can be set from the device metadata, the ZTP Profile, or will default to the Device Name from the Device Record. |
-| Complete | Completion of the step maps for this ZTP PRofile. Final actions will depend on the ZTP Profile type and settings. |
+| Authorize | Authorizes the device. If the device is already authorized, this phase is skipped. If no ADOM is specified, the `root` ADOM is used. | 
+| Device Metadata | Generates or updates device metadata. Metadata can be collected from API calls to FortiManager or custom playbooks. This phase can also notify users when additional information is required.  |
+| Device Groups | Assigns the device to the Device Groups specified in the ZTP profile or generated device metadata. |
+| Run Linked Scripts | Executes all Script Templates linked to the device. Scripts remain linked after execution unless the profile is configured to remove them. You can use `ZTP Profiles` to clear linked scripts to prevent multiple re-running of scripts that should only be run once. |
+| Install Device Config | Installs the device configuration through the FortiManager API. |
+| Install Policy Package | Installs the policy package through the FortiManager API. The package name is resolved from device metadata, the ZTP profile, or will default to the the Device Name from the Device Record. |
+| Complete | Marks the workflow as complete and performs any final actions defined by the profile mode and settings. |
 
 -----------
 
 # ZTP Profile Modes
 
+Profile modes determine how and when a ZTP profile is executed.
+
 | Mode  | Description  |
 | -------- | ----------------- |
 | Disable |  Not in use. |
-| Manual | Designed to run one phase on entry or manually run any phase on demand from the profile itself. |
-| Onboard | When assigned runs all the phases from inside the step map. |
-| LifeCycle | Runs on change of device states when assigned to a device. |
-| Decommision | At assignment runs all phases from the step map and finishes by deleting the device from FMG by default. |
+| Manual | Executes a selected phase on entry or manually run any phase on demand when assigned from the profile itself. |
+| Onboard | Executes all phases defined in the `ZTP Step Map` profile when the profile is assigned. |
+| LifeCycle | Executes provisioning phases in response to device lifecycle state changes when assigned to a device. |
+| Decommision | Executes all phases defined in the `ZTP Step Map` profile and, by default, removes the device from FortiManager after provisioning completes. |
 
 -----------
 
 # Device Metafield Overrides
+
+Several values can be provided from multiple sources. When duplicate values exist, they are resolved according to the following precedence.
+
 | Field  | Order | Description | 
 | -------- | ------- | ---------------- |
-| adom | ZTP Profile -> Device Metadata | authorize device to the adom if it exists during the auth phase. |
-| device_groups | ZTP Profile -> Device Metadata | Append device groups to list without duplicating. |
-| policy_package | Device Metadata -> ZTP Profile -> Device Record -> Device Name | Chooses the name of the policy package to use in the ZTP Phases based on this order of being said.  |
+| adom | ZTP Profile -> Device Metadata | Uses the ADOM specified in the device metadata if present; otherwise uses the ZTP profile value during the `Authorize` phase. |
+| device_groups | ZTP Profile -> Device Metadata | Combines device groups from both sources while preventing duplicate entries. |
+| policy_package | Device Metadata -> ZTP Profile -> Device Record -> Device Name | Selects the policy package to use in the *ZTP Phases* based on the first available value in the specified order.  |
