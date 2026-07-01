@@ -10,8 +10,8 @@
 
 # Configuration
  
-- Modify the **Playbook** Appliance user (`Settings > Identity &amp; Access Management > Access Keys > Appliances > Playbook`) and assign the `FortiManager-Playbook-Appliance` Role.
-- Assign the `FortiManager-Admin` Role to each user who will use this solution (`Settings > Identity &amp; Access Management > Users`).
+- Modify the **Playbook** Appliance user (`Settings > Identity & Access Management > Access Keys > Appliances > Playbook`) and assign the `FortiManager-Playbook-Appliance` Role.
+- Assign the `FortiManager-Admin` Role to each user who will use this solution (`Settings > Identity & Access Management > Users`).
 - Navigate to `Orchestration > Connectors`, verify that the **Code Snippet** connector is installed, and ensure that one of its configurations is marked as `Mark as default configuration`.
 - Navigate to `Settings > System Configuration > Advanced Development Features`. Under the **Custom Code Execution** section, review the information, including the Risks and Guidelines for Safe Use, then select the **I understand the risks and accept responsibility for enabling Custom Code Execution.** checkbox and click **Submit**.
 ![Enable Custom Code Execution](./res/setup/customCodeExe.png) 
@@ -23,11 +23,14 @@
 The setup process for the NetOps - FortiManager ZTP Solution Pack varies depending on your deployment objective. n most environments, complete the following tasks in order:
 1. Install the Latest [NetOps - FortiManager ZTP](https://fortisoar.contenthub.fortinet.com//list.html?contentType=solutionpack&searchContent=NetOpsFortiManagerZTP) Solution Pack from the FortiSOAR Content Hub. 
 2. Create an [API User](#fortimanager-api-user) on your FortiManager.
-3. Create a Manager record with `RPC` credentials and make sure that API calls to your FMG are working by seeing the API system results fields are filled out. These field would include `firmware`, `Platform` and `SN` that come from the `Source Data` field in the Manager record.    
+3. Create a Manager record with `RPC` credentials and make sure that API calls to your FMG are working by seeing the API system results fields are filled out. 
+These field would include `firmware`, `Platform` and `SN` that come from the `Source Data` field in the Manager record.    
 
 ### FortiManager API User
 
-Add a FortiSOAR API user to your FMG with RPC read-write permissions. The following example creates a user with a FortiSOAR avatar. Modify the avatar, username, password, and profile as needed. Importantly, enable API access by setting `rpc-permit` to `read-write`: <br />`set rpc-permit read-write`
+Add a FortiSOAR API user to your FMG with RPC `read-write` permissions. 
+
+The following example creates a user with a FortiSOAR avatar. Modify the avatar, username, password, and profile as needed. Importantly, enable API access by setting `rpc-permit` to `read-write`: <br />`set rpc-permit read-write`
 
 ![](./res/setup/setup-002.png) 
 
@@ -51,10 +54,11 @@ Click **Add** to create a new **Manager** (FortiManager) record in FortiSOAR, th
 
 ![Adding a new Manager Record](./res/setup/addNewManager.png) 
 
-If the API request to your FMG suceeds, the FortiManager details are automatically populated into fields such as `Platform`, `SN`, `Firmware`, and `Time Zone`. The `Source Data` tab displays the complete response returned by the FortiManager `System Info` API. 
+If the API request to your FMG suceeds, the FortiManager details are automatically populated into fields such as `Platform`, `SN`, `Firmware`, and `Time Zone`. 
+
+The `Source Data` tab displays the complete response returned by the FortiManager `System Info` API: 
 
 ![Added Manager Record](./res/setup/addedFmgManagerRecord.png) 
-
 
 You can now synchronize the FortiManager Device Database and perform actions on the managed devices.
 
