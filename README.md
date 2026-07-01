@@ -7,8 +7,8 @@
 - **Compatible Version**: 
   * FortiSOAR v7.4.0 and later
   * FortiManager v7.2.0 and later for full features. Limited features for earlier FortiManager versions. 
-- [Release Notes](./release_notes.md) 
-- [Changelog](./docs/changelog.md)
+<!-- - [Release Notes](./release_notes.md) 
+- [Changelog](./docs/changelog.md)-->
 
 # Overview
 
