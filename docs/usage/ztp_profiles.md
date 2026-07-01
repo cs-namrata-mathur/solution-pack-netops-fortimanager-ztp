@@ -37,7 +37,7 @@ Profile settings control how a ZTP profile is assigned and how it behaves throug
 | Retain Profile Assignment | Checkbox to enable/disable to retain or remove a ZTP Profile from a device when the ZTP Phases are complete. Selectng this option keeps the profile assigned after all ZTP phases complete. This is useful for cases where you might want to re-run a profile on a device or where you want to filter completed device based on the assigned profile regardless of the phase state. This option is available only when `ZTP Profile Next` is empty.   |
 | Skip Delete Device | Available only in `Decommission` mode. This checkbox is selected by default, which prevents the device from being deleted from FortiManager after the workflow completes. The device record remains in FortiSOAR. |
 
-# ZTP Phases
+## ZTP Phases
 
 The provisioning workflow is controlled by the `ZTP Step Map`, which defines the execution order of each provisioning phase. The default workflow follows and it be customized to meet your deployment requirements:
 
@@ -64,7 +64,7 @@ The provisioning workflow is controlled by the `ZTP Step Map`, which defines the
 }
 ```
 
-## Phase Steps Defined
+### Phase Steps Defined
 
 | Phase  | Description  |
 | --------- | ----------------- |
@@ -78,7 +78,7 @@ The provisioning workflow is controlled by the `ZTP Step Map`, which defines the
 
 -----------
 
-# ZTP Profile Modes
+## ZTP Profile Modes
 
 Profile modes determine how and when a ZTP profile is executed.
 
@@ -92,7 +92,7 @@ Profile modes determine how and when a ZTP profile is executed.
 
 -----------
 
-# Device Metafield Overrides
+## Device Metafield Overrides
 
 Several values can be provided from multiple sources. When duplicate values exist, they are resolved according to the following precedence.
 

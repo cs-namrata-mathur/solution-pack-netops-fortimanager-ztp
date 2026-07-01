@@ -1,7 +1,7 @@
 | [Home](../../README.md) / [Usage](../usage.md) |
 |------------------------------------------------|
 
-# Provisioning Example Flow
+# Provisioning Example Flow using multiple ZTP Profiles
 
 This example demonstrates how to provision four unauthorized FortiGate devices managed by FortiManager. The workflow begins with a single manual action: assigning the initial ZTP profile to the selected devices. To fully automate the workflow, configure the initial ZTP profile to use `auto assign mode`. 
 
