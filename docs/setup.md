@@ -20,7 +20,7 @@
 
 ## Setup NetOps - FortiManager ZTP
 
-The setup process for the NetOps - FortiManager ZTP Solution Pack varies depending on your deployment objective. n most environments, complete the following tasks in order:
+The setup process for the NetOps - FortiManager ZTP Solution Pack varies depending on your deployment objective. In most environments, the typical setup sequence includes the following tasks, although the specific tasks you complete depend on your deployment objective:
 1. Install the Latest [NetOps - FortiManager ZTP](https://fortisoar.contenthub.fortinet.com//list.html?contentType=solutionpack&searchContent=NetOpsFortiManagerZTP) Solution Pack from the FortiSOAR Content Hub. 
 2. Create an [API User](#fortimanager-api-user) on your FortiManager.
 3. Create a Manager record with `RPC` credentials and make sure that API calls to your FMG are working by seeing the API system results fields are filled out. 
